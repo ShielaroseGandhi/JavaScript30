@@ -63,7 +63,6 @@
       crossorigin="anonymous"></script>
    <script>
       function playSound(e) {
-         console.log(e.target.attributes[0])
          // select audio by data-key
          const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
          const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
@@ -92,7 +91,19 @@
 
       $(function(){
          $(".key").on("click", function(){
-            console.log($(this).data('key'))
+            const key = $(this).data('key')
+            const selectedDiv = $(`.key[data-key=${key}]`)
+            const audio = $(`audio[data-key=${key}]`)[0]
+
+            // if there's no audio, stop the function from running
+            if (!audio) return;
+
+            audio.currentTime = 0 //rewinds to the start
+            audio.play()
+
+            // add class in js when playing 
+            $(this).addClass('playing');
+
          })
       })
    </script>
